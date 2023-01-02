@@ -1,0 +1,7 @@
+[workspace]
+members = [
+	"maeve-driver",
+	"maeve-adapter",
+	"maeve-app",
+	"maeve-kernel"
+]
