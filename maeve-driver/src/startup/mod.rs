@@ -11,11 +11,13 @@ use axum::{
     routing::{get, post},
     extract::Extension, Router,
 };
-use dotenv::dotenv;
+
 use std::{net::SocketAddr, sync::Arc};
 
+use crate::util::logger;
+
 pub async fn startup(modules: Arc<Modules>) {
-    init_logger();
+    logger::init();
 
     let user_router = Router::new()
         .route("/:id", get(user_view))
@@ -33,20 +35,4 @@ pub async fn startup(modules: Arc<Modules>) {
         .serve(app.into_make_service())
         .await
         .unwrap_or_else(|_| panic!("Server cannot launch!"))
-}
-
-fn init_logger() {
-    dotenv().ok();
-
-    // ログ出力を設定する
-    let format = tracing_subscriber::fmt::format()
-        .with_level(true)
-        .with_target(false)
-        .with_thread_ids(true)
-        .with_thread_names(true) 
-        .compact();
-    
-        tracing_subscriber::fmt()
-        .event_format(format)
-        .init();
 }

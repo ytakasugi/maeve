@@ -63,3 +63,38 @@ impl UserRepository for DatabaseRepository<User> {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod test {
+    use maeve_kernel::model::user::NewUser;
+    use maeve_kernel::model::Id;
+    use maeve_kernel::repository::user::UserRepository;
+    use ulid::Ulid;
+
+    use crate::persistence::database::Db;
+    
+    use super::DatabaseRepository;
+
+    #[tokio::test]
+    async fn test_create_user() {
+        let db = Db::new().await;
+        let repository = DatabaseRepository::new(db);
+        let id = Ulid::new();
+        
+        repository
+            .create(NewUser::new(
+                Id::new(id),
+                "TestUser".to_string(),
+                "TestPassword".to_string(),
+                "Test".to_string()
+            ))
+            .await
+            .unwrap();
+
+        let find_user = repository.find(&Id::new(id)).await.unwrap().unwrap();
+
+        assert_eq!(find_user.id.value, id);
+    }
+
+
+}
