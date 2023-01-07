@@ -37,4 +37,11 @@ impl<R: RepositoriesModuleExt> UserUseCase<R> {
             .create(payload.try_into()?)
             .await
     }
+
+    pub async fn delete_user(&self, id: String) -> anyhow::Result<()> {
+        self.repositories
+            .user_repository()
+            .delete(&id.try_into()?)
+            .await
+    }
 }

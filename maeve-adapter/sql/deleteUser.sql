@@ -1,0 +1,5 @@
+DELETE FROM 
+    USERS 
+WHERE
+    1 = 1
+    AND ID = $1

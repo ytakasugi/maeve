@@ -62,6 +62,32 @@ impl UserRepository for DatabaseRepository<User> {
 
         Ok(())
     }
+
+    async fn delete(&self, id: &Id<User>) -> anyhow::Result<()> {
+        // コネクションプールをクローン
+        let pool = self.pool.0.clone();
+        // トランザクションを開始する
+        let mut transaction = pool.begin().await.unwrap();
+
+        // ユーザーを削除する
+        sqlx::query_file_as!(
+            UserTable,
+            "sql/deleteUser.sql",
+            id.value.to_string()
+        )
+        .execute(&mut transaction)
+        .await?;
+
+        // トランザクションをコミットする
+        transaction
+            .commit()
+            .await
+            .unwrap_or_else(|_| {
+                panic!("Commit failed.")
+            });
+
+        Ok(())
+    }
 }
 
 #[cfg(test)]
@@ -95,6 +121,4 @@ mod test {
 
         assert_eq!(find_user.id.value, id);
     }
-
-
 }

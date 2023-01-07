@@ -41,8 +41,25 @@ pub async fn create_user(
 ) -> Result<impl IntoResponse, StatusCode> {
     let res = modules.user_usecase().create_user(payload.into()).await;
 
-    res.map(|_| StatusCode::CREATED).map_err(|err| {
-        error!("Unexpected error: {:?}", err);
-        StatusCode::INTERNAL_SERVER_ERROR
+    res.map(|_| StatusCode::CREATED)
+        .map_err(|err| {
+            error!("Unexpected error: {:?}", err);
+            StatusCode::INTERNAL_SERVER_ERROR
     })
+}
+
+#[tracing::instrument(skip(modules))]
+pub async fn delete_user(
+    Path(id): Path<String>,
+    Extension(modules): Extension<Arc<Modules>>,
+) -> Result<impl IntoResponse, StatusCode> {
+    modules
+        .user_usecase()
+        .delete_user(id)
+        .await
+        .map(|_| StatusCode::NO_CONTENT)
+        .map_err(|err| {
+            error!("Unexpected error: {:?}", err);
+            StatusCode::INTERNAL_SERVER_ERROR
+        })
 }
