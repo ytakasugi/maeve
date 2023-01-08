@@ -121,4 +121,30 @@ mod test {
 
         assert_eq!(find_user.id.value, id);
     }
+
+    #[tokio::test]
+    async fn test_delete_user() {
+        let db = Db::new().await;
+        let repository = DatabaseRepository::new(db);
+        let id = Ulid::new();
+
+        repository
+            .create(NewUser::new(
+                Id::new(id),
+                "TestUser".to_string(),
+                "TestPassword".to_string(),
+                "Test".to_string()
+            ))
+            .await
+            .unwrap();
+
+        repository
+            .delete(&Id::new(id))
+            .await
+            .unwrap();
+
+        let find_user = repository.find(&Id::new(id)).await.unwrap();
+
+        assert_eq!(find_user, None);
+    }
 }

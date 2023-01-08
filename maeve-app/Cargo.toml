@@ -6,9 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-maeve-kernel = { path = "../maeve-kernel" }
 maeve-adapter = { path = "../maeve-adapter" }
+maeve-kernel = { path = "../maeve-kernel" }
+anyhow = "1.0.44"
 derive-new = "0.5.9"
 tokio = { version = "1.12.0", features = ["full"] }
-anyhow = "1.0.44"
 chrono = "0.4.19"

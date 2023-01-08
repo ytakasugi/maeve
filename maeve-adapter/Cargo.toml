@@ -7,12 +7,12 @@ edition = "2021"
 
 [dependencies]
 maeve-kernel = { path = "../maeve-kernel" }
-sqlx = { version = "0.5", features = ["runtime-tokio-rustls", "postgres", "chrono"] }
 anyhow = "1.0.44"
-tokio = { version = "1.12.0", features = ["rt", "macros", "test-util"] }
 async-trait = "0.1.51"
 chrono = "0.4.19"
-http = "0.2.5"
 derive-new = "0.5.9"
 dotenv = "0.15.0"
+http = "0.2.5"
+sqlx = { version = "0.5", features = ["runtime-tokio-rustls", "postgres", "chrono"] }
+tokio = { version = "1.12.0", features = ["rt", "macros", "test-util"] }
 ulid = "1.0.0"

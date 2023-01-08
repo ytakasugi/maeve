@@ -6,19 +6,20 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-maeve-kernel = { path = "../maeve-kernel" }
-maeve-app = { path = "../maeve-app" }
 maeve-adapter = { path = "../maeve-adapter" }
-axum = { version = "0.4.3", features = ["multipart"] }
-tokio = { version = "1.12.0", features = ["rt", "macros", "test-util"] }
-serde = { version = "1.0.130", features = ["derive"] }
-derive-new = "0.5.9"
+maeve-app = { path = "../maeve-app" }
+maeve-kernel = { path = "../maeve-kernel" }
 anyhow = "1.0.44"
+axum = { version = "0.4.3", features = ["multipart"] }
+derive-new = "0.5.9"
+dotenv = "0.15.0"
 futures = { version = "0.3.17", features = ["executor"] }
-validator = { version = "0.14.0", features = ["derive"] }
 http-body = "0.4.3"
+serde = { version = "1.0.130", features = ["derive"] }
 thiserror = "1.0.30"
+tokio = { version = "1.12.0", features = ["rt", "macros", "test-util"] }
 tracing = "0.1.29"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-dotenv = "0.15.0"
+validator = { version = "0.14.0", features = ["derive"] }
 csv = "1.1.6"
+

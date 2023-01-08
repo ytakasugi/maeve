@@ -5,7 +5,7 @@ use ulid::Ulid;
 
 pub mod user;
 
-#[derive(new, Debug, Clone, Copy)]
+#[derive(new, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Id<T> {
     pub value: Ulid,
     _marker: PhantomData<T>
