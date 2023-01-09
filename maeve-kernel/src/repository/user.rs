@@ -7,4 +7,5 @@ use crate::model::Id;
 pub trait UserRepository {
     async fn find(&self, id: &Id<User>) -> anyhow::Result<Option<User>>;
     async fn create(&self, payload: NewUser) -> anyhow::Result<()>;
+    async fn delete(&self, id: &Id<User>) -> anyhow::Result<()>;
 }

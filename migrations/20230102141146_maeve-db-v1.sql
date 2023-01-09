@@ -103,7 +103,7 @@ CREATE TABLE USERS (
     USER_NAME TEXT NOT NULL,
     PASSWORD_HASH TEXT NOT NULL,
     USER_ROLE TEXT NOT NULL
-) character set utf8mb4 collate utf8mb4_bin;
+);
 
 -- アクセスログテーブル
 CREATE TABLE ACCESS_LOG (

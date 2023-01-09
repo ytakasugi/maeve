@@ -2,7 +2,7 @@ use derive_new::new;
 
 use super::Id;
 
-#[derive(new, Debug)]
+#[derive(new, Debug, PartialEq, Eq)]
 pub struct User {
     pub id: Id<User>,
     pub user_name: String,

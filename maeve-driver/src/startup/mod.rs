@@ -3,12 +3,13 @@ use crate::{
     routes::{
         user::{
             user_view,
-            create_user
+            create_user,
+            delete_user
         }
     }
 };
 use axum::{
-    routing::{get, post},
+    routing::{get, post, delete},
     extract::Extension, Router,
 };
 
@@ -20,8 +21,10 @@ pub async fn startup(modules: Arc<Modules>) {
     logger::init();
 
     let user_router = Router::new()
+        .route("/", post(create_user))
         .route("/:id", get(user_view))
-        .route("/", post(create_user));
+        .route("/:id", delete(delete_user));
+                
 
     let app = Router::new()
         .nest("/users", user_router)
