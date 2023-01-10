@@ -15,3 +15,5 @@
   - `curl -X POST -H "Content-Type: application/json" -d '{"user_name": "test03", "password_hash": "PasswordTest03", "user_role": "test"}' http://localhost:8080/users`
 - ユーザー取得
   - `curl http://localhost:8080/users/01GNV3TVA288YCRC57WZE183QA`
+- カスタマー作成
+  - `curl -X POST -H "Content-Type: application/json" -d '{"name": "admin", "email": "admin@example.com", "address": "adminLocation", "phone": "999-9999-9999"}' http://localhost:8080/customers/01GNV3TVA288YCRC57WZE183QA`

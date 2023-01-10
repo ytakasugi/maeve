@@ -4,6 +4,7 @@ use std::marker::PhantomData;
 use ulid::Ulid;
 
 pub mod user;
+pub mod customer;
 
 #[derive(new, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Id<T> {
