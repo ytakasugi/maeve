@@ -4,7 +4,8 @@ use derive_new::new;
 
 use maeve_adapter::modules::RepositoriesModuleExt;
 use maeve_kernel::{repository::customer::CustomerRepository};
-use maeve_kernel::model::customer::NewCustomer;
+
+use crate::model::customer::CreateCustomer;
 
 #[derive(new)]
 pub struct CustomerUseCase<R: RepositoriesModuleExt> {
@@ -12,10 +13,10 @@ pub struct CustomerUseCase<R: RepositoriesModuleExt> {
 }
 
 impl<R: RepositoriesModuleExt> CustomerUseCase<R> {
-    pub async fn create_customer(&self, id: String, payload: NewCustomer) -> anyhow::Result<()> {
+    pub async fn create_customer(&self, id: String, payload: CreateCustomer) -> anyhow::Result<()> {
         self.repositories
             .customer_repository()
-            .create(&id.try_into()?, payload)
+            .create(&id.try_into()?, payload.try_into()?)
             .await
     }
 }
