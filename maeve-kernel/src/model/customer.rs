@@ -1,11 +1,10 @@
 use derive_new::new;
 
 use super::Id;
-use crate::model::user::User;
 
 #[derive(new, Debug, PartialEq, Eq)]
 pub struct Customer {
-    pub id: Id<User>,
+    pub id: Id<Customer>,
     pub name: String,
     pub zip_code: String,
     pub address: String,

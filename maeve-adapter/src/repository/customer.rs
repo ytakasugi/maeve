@@ -2,7 +2,6 @@ use async_trait::async_trait;
 use maeve_kernel::{
     model::{
         customer::{Customer, NewCustomer},
-        user::User,
         Id,
     },
     repository::customer::CustomerRepository,
@@ -13,7 +12,7 @@ use crate::model::customer::CustomerTable;
 
 #[async_trait]
 impl CustomerRepository for DatabaseRepository<Customer> {
-    async fn create(&self, id: &Id<User>, payload: NewCustomer) -> anyhow::Result<()> {
+    async fn create(&self, id: &Id<Customer>, payload: NewCustomer) -> anyhow::Result<()> {
         let pool = self.pool.0.clone();
         let mut transaction = pool.begin().await.unwrap();
 
