@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 
-use crate::model::user::{User, NewUser};
+use crate::model::user::{NewUser, User};
 use crate::model::Id;
 
 #[async_trait]

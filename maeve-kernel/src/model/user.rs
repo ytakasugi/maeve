@@ -6,6 +6,7 @@ use super::Id;
 pub struct User {
     pub id: Id<User>,
     pub user_name: String,
+    pub email: String,
     pub password_hash: String,
     pub user_role: String,
 }
@@ -14,6 +15,7 @@ pub struct User {
 pub struct NewUser {
     pub id: Id<User>,
     pub user_name: String,
+    pub email: String,
     pub password_hash: String,
     pub user_role: String,
 }

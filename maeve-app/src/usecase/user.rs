@@ -6,13 +6,12 @@ use derive_new::new;
 use maeve_adapter::modules::RepositoriesModuleExt;
 use maeve_kernel::repository::user::UserRepository;
 
-use crate::model::user::UserView;
 use crate::model::user::CreateUser;
-
+use crate::model::user::UserView;
 
 #[derive(new)]
 pub struct UserUseCase<R: RepositoriesModuleExt> {
-    repositories: Arc<R>
+    repositories: Arc<R>,
 }
 
 impl<R: RepositoriesModuleExt> UserUseCase<R> {
@@ -24,10 +23,8 @@ impl<R: RepositoriesModuleExt> UserUseCase<R> {
             .await?;
 
         match user {
-            Some(user) => {
-                Ok(Some(UserView::new(user)))
-            }
-            None => Ok(None)
+            Some(user) => Ok(Some(UserView::new(user))),
+            None => Ok(None),
         }
     }
 

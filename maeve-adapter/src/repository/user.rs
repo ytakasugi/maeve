@@ -1,35 +1,28 @@
 use async_trait::async_trait;
 use maeve_kernel::{
     model::{
-        user::{
-            User,
-            NewUser,
-        },
+        user::{NewUser, User},
         Id,
     },
     repository::user::UserRepository,
 };
 
-use crate::model::user::UserTable;
 use super::DatabaseRepository;
+use crate::model::user::UserTable;
 
 #[async_trait]
 impl UserRepository for DatabaseRepository<User> {
     async fn find(&self, id: &Id<User>) -> anyhow::Result<Option<User>> {
         let pool = self.pool.0.clone();
 
-        let user_table = sqlx::query_file_as!(
-                UserTable,
-                "sql/findUser.sql",
-                id.value.to_string()
-            )
+        let user_table = sqlx::query_file_as!(UserTable, "sql/findUser.sql", id.value.to_string())
             .fetch_one(&*pool)
             .await
             .ok();
 
         match user_table {
             Some(user) => Ok(Some(user.try_into()?)),
-            None => Ok(None)
+            None => Ok(None),
         }
     }
 
@@ -46,6 +39,7 @@ impl UserRepository for DatabaseRepository<User> {
             "sql/createUser.sql",
             user_table.id,
             user_table.user_name,
+            user_table.email,
             user_table.password_hash,
             user_table.user_role
         )
@@ -56,9 +50,7 @@ impl UserRepository for DatabaseRepository<User> {
         transaction
             .commit()
             .await
-            .unwrap_or_else(|_| {
-                panic!("Commit failed.")
-            });
+            .unwrap_or_else(|_| panic!("Commit failed."));
 
         Ok(())
     }
@@ -70,21 +62,15 @@ impl UserRepository for DatabaseRepository<User> {
         let mut transaction = pool.begin().await.unwrap();
 
         // ユーザーを削除する
-        sqlx::query_file_as!(
-            UserTable,
-            "sql/deleteUser.sql",
-            id.value.to_string()
-        )
-        .execute(&mut transaction)
-        .await?;
+        sqlx::query_file_as!(UserTable, "sql/deleteUser.sql", id.value.to_string())
+            .execute(&mut transaction)
+            .await?;
 
         // トランザクションをコミットする
         transaction
             .commit()
             .await
-            .unwrap_or_else(|_| {
-                panic!("Commit failed.")
-            });
+            .unwrap_or_else(|_| panic!("Commit failed."));
 
         Ok(())
     }
@@ -98,7 +84,7 @@ mod test {
     use ulid::Ulid;
 
     use crate::persistence::database::Db;
-    
+
     use super::DatabaseRepository;
 
     #[tokio::test]
@@ -106,13 +92,14 @@ mod test {
         let db = Db::new().await;
         let repository = DatabaseRepository::new(db);
         let id = Ulid::new();
-        
+
         repository
             .create(NewUser::new(
                 Id::new(id),
                 "TestUser".to_string(),
+                "TestUser@email.com".to_string(),
                 "TestPassword".to_string(),
-                "Test".to_string()
+                "Test".to_string(),
             ))
             .await
             .unwrap();
@@ -132,16 +119,14 @@ mod test {
             .create(NewUser::new(
                 Id::new(id),
                 "TestUser".to_string(),
+                "TestUser@email.com".to_string(),
                 "TestPassword".to_string(),
-                "Test".to_string()
+                "Test".to_string(),
             ))
             .await
             .unwrap();
 
-        repository
-            .delete(&Id::new(id))
-            .await
-            .unwrap();
+        repository.delete(&Id::new(id)).await.unwrap();
 
         let find_user = repository.find(&Id::new(id)).await.unwrap();
 

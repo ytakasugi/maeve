@@ -5,14 +5,11 @@ use maeve_adapter::{
     persistence::database::Db,
 };
 
-use maeve_app::usecase::{
-    user::UserUseCase,
-    customer::CustomerUseCase
-};
+use maeve_app::usecase::{customer::CustomerUseCase, user::UserUseCase};
 
 pub struct Modules {
     user_usecase: UserUseCase<RepositoriesModule>,
-    customer_usecase: CustomerUseCase<RepositoriesModule>
+    customer_usecase: CustomerUseCase<RepositoriesModule>,
 }
 
 pub trait ModulesExt {

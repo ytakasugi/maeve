@@ -3,13 +3,13 @@ use std::sync::Arc;
 use derive_new::new;
 
 use maeve_adapter::modules::RepositoriesModuleExt;
-use maeve_kernel::{repository::customer::CustomerRepository};
+use maeve_kernel::repository::customer::CustomerRepository;
 
 use crate::model::customer::CreateCustomer;
 
 #[derive(new)]
 pub struct CustomerUseCase<R: RepositoriesModuleExt> {
-    repositories: Arc<R>
+    repositories: Arc<R>,
 }
 
 impl<R: RepositoriesModuleExt> CustomerUseCase<R> {

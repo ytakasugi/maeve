@@ -12,8 +12,8 @@
 ## リクエスト
 
 - ユーザー作成
-  - `curl -X POST -H "Content-Type: application/json" -d '{"user_name": "test03", "password_hash": "PasswordTest03", "user_role": "test"}' http://localhost:8080/users`
+  - `curl -X POST -H "Content-Type: application/json" -d '{"user_name": "admin", "email": "admin@email.com", "password_hash": "PasswordAdmin", "user_role": "admin"}' http://localhost:8080/users`
 - ユーザー取得
   - `curl http://localhost:8080/users/01GNV3TVA288YCRC57WZE183QA`
 - カスタマー作成
-  - `curl -X POST -H "Content-Type: application/json" -d '{"name": "admin", "email": "admin@example.com", "address": "adminLocation", "phone": "999-9999-9999"}' http://localhost:8080/customers/01GNV3TVA288YCRC57WZE183QA`
+  - `curl -X POST -H "Content-Type: application/json" -d '{"name": "admin", "zip_code": "100-0014", "address": "adminLocation", "phone": "999-9999-9999"}' http://localhost:8080/customers/01GPTXVCTG8D2CG4BYJYFR9HC3`

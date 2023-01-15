@@ -1,25 +1,22 @@
-use serde::{
-    //Serialize,
-    Deserialize
-};
+use serde::Deserialize;
 
 use maeve_app::model::customer::CreateCustomer;
 
 #[derive(Deserialize, Debug)]
 pub struct JsonCreateCustomer {
     name: String,
-    email: String,
+    zip_code: String,
     address: String,
     phone: String,
 }
 
 impl From<JsonCreateCustomer> for CreateCustomer {
     fn from(c: JsonCreateCustomer) -> Self {
-        CreateCustomer { 
+        CreateCustomer {
             name: c.name,
-            email: c.email,
+            zip_code: c.zip_code,
             address: c.address,
-            phone: c.phone, 
+            phone: c.phone,
         }
     }
 }

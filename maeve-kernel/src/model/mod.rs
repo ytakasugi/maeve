@@ -3,13 +3,13 @@ use derive_new::new;
 use std::marker::PhantomData;
 use ulid::Ulid;
 
-pub mod user;
 pub mod customer;
+pub mod user;
 
 #[derive(new, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Id<T> {
     pub value: Ulid,
-    _marker: PhantomData<T>
+    _marker: PhantomData<T>,
 }
 
 impl<T> Id<T> {

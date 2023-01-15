@@ -1,12 +1,12 @@
 use maeve_kernel::model::customer::Customer;
-use maeve_kernel::repository::{user::UserRepository, customer::CustomerRepository};
 use maeve_kernel::model::user::User;
+use maeve_kernel::repository::{customer::CustomerRepository, user::UserRepository};
 
 use crate::{persistence::database::Db, repository::DatabaseRepository};
 
 pub struct RepositoriesModule {
     user_repository: DatabaseRepository<User>,
-    customer_repository: DatabaseRepository<Customer>
+    customer_repository: DatabaseRepository<Customer>,
 }
 
 pub trait RepositoriesModuleExt {

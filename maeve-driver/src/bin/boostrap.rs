@@ -1,9 +1,6 @@
 use std::sync::Arc;
 
-use maeve_driver::{
-    module::Modules,
-    startup::startup,
-};
+use maeve_driver::{module::Modules, startup::startup};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {

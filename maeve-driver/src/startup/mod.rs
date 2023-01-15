@@ -1,17 +1,14 @@
 use crate::{
     module::Modules,
     routes::{
-        user::{
-            user_view,
-            create_user,
-            delete_user
-        },
         customer::create_customer,
-    }
+        user::{create_user, delete_user, user_view},
+    },
 };
 use axum::{
-    routing::{get, post, delete},
-    extract::Extension, Router,
+    extract::Extension,
+    routing::{delete, get, post},
+    Router,
 };
 
 use std::{net::SocketAddr, sync::Arc};
@@ -25,15 +22,14 @@ pub async fn startup(modules: Arc<Modules>) {
         .route("/", post(create_user))
         .route("/:id", get(user_view))
         .route("/:id", delete(delete_user));
-    
-    let customer_router = Router::new()
-        .route("/:id", post(create_customer));
+
+    let customer_router = Router::new().route("/:id", post(create_customer));
 
     let app = Router::new()
         .nest("/users", user_router)
         .nest("/customers", customer_router)
         .layer(Extension(modules));
-    
+
     let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
 
     tracing::info!("Server listening on {}", addr);

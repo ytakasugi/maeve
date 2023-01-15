@@ -8,10 +8,8 @@ pub fn init() {
         .with_level(true)
         .with_target(false)
         .with_thread_ids(true)
-        .with_thread_names(true) 
+        .with_thread_names(true)
         .compact();
-    
-        tracing_subscriber::fmt()
-        .event_format(format)
-        .init();
+
+    tracing_subscriber::fmt().event_format(format).init();
 }
