@@ -2,7 +2,7 @@ use async_trait::async_trait;
 use maeve_kernel::{
     model::{
         customer::{Customer, NewCustomer},
-        Id,
+        //Id,
     },
     repository::customer::CustomerRepository,
 };
@@ -12,18 +12,20 @@ use crate::model::customer::CustomerTable;
 
 #[async_trait]
 impl CustomerRepository for DatabaseRepository<Customer> {
-    async fn create(&self, id: &Id<Customer>, payload: NewCustomer) -> anyhow::Result<()> {
+    async fn create(&self, payload: NewCustomer) -> anyhow::Result<()> {
+        let customer_table: CustomerTable = payload.try_into()?;
         let pool = self.pool.0.clone();
         let mut transaction = pool.begin().await.unwrap();
 
         let _ = sqlx::query_file_as!(
             CustomerTable,
             "sql/createCustomer.sql",
-            id.value.to_string(),
-            payload.name,
-            payload.zip_code,
-            payload.address,
-            payload.phone
+            customer_table.id,
+            customer_table.user_id,
+            customer_table.name,
+            customer_table.zip_code,
+            customer_table.address,
+            customer_table.phone
         )
         .fetch_one(&mut transaction)
         .await?;
@@ -54,11 +56,13 @@ mod test {
         let db = Db::new().await;
         let repository = DatabaseRepository::new(db);
         let id = Ulid::new();
+        let user_id = Ulid::new();
 
         repository
             .create(
-                &Id::new(id),
                 NewCustomer::new(
+                    Id::new(id),
+                    user_id.to_string(),
                     "TestCustomer".to_string(),
                     "100-0014".to_string(),
                     "TestCustomerAddress".to_string(),

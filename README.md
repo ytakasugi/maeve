@@ -16,4 +16,4 @@
 - ユーザー取得
   - `curl http://localhost:8080/users/01GNV3TVA288YCRC57WZE183QA`
 - カスタマー作成
-  - `curl -X POST -H "Content-Type: application/json" -d '{"name": "admin", "zip_code": "100-0014", "address": "adminLocation", "phone": "999-9999-9999"}' http://localhost:8080/customers/01GPTXVCTG8D2CG4BYJYFR9HC3`
+  - `curl -X POST -H "Content-Type: application/json" -d '{"user_id": "01GPTXVCTG8D2CG4BYJYFR9HC3", "name": "admin", "zip_code": "100-0014", "address": "adminLocation", "phone": "999-9999-9999"}' http://localhost:8080/customers`

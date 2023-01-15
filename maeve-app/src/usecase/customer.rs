@@ -13,10 +13,10 @@ pub struct CustomerUseCase<R: RepositoriesModuleExt> {
 }
 
 impl<R: RepositoriesModuleExt> CustomerUseCase<R> {
-    pub async fn create_customer(&self, id: String, payload: CreateCustomer) -> anyhow::Result<()> {
+    pub async fn create_customer(&self, payload: CreateCustomer) -> anyhow::Result<()> {
         self.repositories
             .customer_repository()
-            .create(&id.try_into()?, payload.try_into()?)
+            .create(payload.try_into()?)
             .await
     }
 }

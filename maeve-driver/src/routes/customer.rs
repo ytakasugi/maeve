@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use axum::{
-    extract::{Extension, Path},
+    extract::{Extension},
     http::StatusCode,
     response::IntoResponse,
     Json,
@@ -15,13 +15,12 @@ use crate::{
 
 #[tracing::instrument(skip(modules))]
 pub async fn create_customer(
-    Path(id): Path<String>,
     Json(payload): Json<JsonCreateCustomer>,
     Extension(modules): Extension<Arc<Modules>>,
 ) -> Result<impl IntoResponse, StatusCode> {
     let res = modules
         .customer_usecase()
-        .create_customer(id, payload.into())
+        .create_customer(payload.into())
         .await;
 
     res.map(|_| StatusCode::CREATED).map_err(|err| {

@@ -1,8 +1,10 @@
 use derive_new::new;
 use maeve_kernel::model::customer::{Customer, NewCustomer};
+use maeve_kernel::model::Id;
 
 pub struct CustomerView {
     pub id: String,
+    pub user_id: String,
     pub name: String,
     pub zip_code: String,
     pub address: String,
@@ -11,6 +13,7 @@ pub struct CustomerView {
 
 #[derive(new)]
 pub struct CreateCustomer {
+    pub user_id: String,
     pub name: String,
     pub zip_code: String,
     pub address: String,
@@ -21,6 +24,7 @@ impl CustomerView {
     pub fn new(customer: Customer) -> Self {
         Self {
             id: customer.id.value.to_string(),
+            user_id: customer.user_id,
             name: customer.name,
             zip_code: customer.zip_code,
             address: customer.address,
@@ -33,6 +37,14 @@ impl TryFrom<CreateCustomer> for NewCustomer {
     type Error = anyhow::Error;
 
     fn try_from(c: CreateCustomer) -> Result<Self, Self::Error> {
-        Ok(NewCustomer::new(c.name, c.zip_code, c.address, c.phone))
+        let customer_id = Id::gen();
+        Ok(NewCustomer::new(
+            customer_id,
+            c.user_id,
+            c.name, 
+            c.zip_code,
+            c.address, 
+            c.phone
+        ))
     }
 }

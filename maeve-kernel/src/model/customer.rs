@@ -5,6 +5,7 @@ use super::Id;
 #[derive(new, Debug, PartialEq, Eq)]
 pub struct Customer {
     pub id: Id<Customer>,
+    pub user_id: String,
     pub name: String,
     pub zip_code: String,
     pub address: String,
@@ -13,6 +14,8 @@ pub struct Customer {
 
 #[derive(new, Debug)]
 pub struct NewCustomer {
+    pub id: Id<Customer>,
+    pub user_id: String,
     pub name: String,
     pub zip_code: String,
     pub address: String,
