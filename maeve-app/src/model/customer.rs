@@ -41,10 +41,10 @@ impl TryFrom<CreateCustomer> for NewCustomer {
         Ok(NewCustomer::new(
             customer_id,
             c.user_id,
-            c.name, 
+            c.name,
             c.zip_code,
-            c.address, 
-            c.phone
+            c.address,
+            c.phone,
         ))
     }
 }

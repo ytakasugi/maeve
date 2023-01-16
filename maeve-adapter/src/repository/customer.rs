@@ -1,9 +1,6 @@
 use async_trait::async_trait;
 use maeve_kernel::{
-    model::{
-        customer::{Customer, NewCustomer},
-        //Id,
-    },
+    model::customer::{Customer, NewCustomer},
     repository::customer::CustomerRepository,
 };
 
@@ -59,16 +56,14 @@ mod test {
         let user_id = Ulid::new();
 
         repository
-            .create(
-                NewCustomer::new(
-                    Id::new(id),
-                    user_id.to_string(),
-                    "TestCustomer".to_string(),
-                    "100-0014".to_string(),
-                    "TestCustomerAddress".to_string(),
-                    "999-9999-9999".to_string(),
-                ),
-            )
+            .create(NewCustomer::new(
+                Id::new(id),
+                user_id.to_string(),
+                "TestCustomer".to_string(),
+                "100-0014".to_string(),
+                "TestCustomerAddress".to_string(),
+                "999-9999-9999".to_string(),
+            ))
             .await
             .unwrap();
     }

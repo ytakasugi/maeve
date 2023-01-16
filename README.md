@@ -6,6 +6,8 @@
 
 - [Rust の新しい HTTP サーバーのクレート Axum をフルに活用してサーバーサイドアプリケーション開発をしてみる](https://blog-dry.com/entry/2021/12/26/002649)
   - [stock-metrics](https://github.com/yuk1ty/stock-metrics)
+- [Layered Architecture(Clean Architecture)の勘所](https://qiita.com/shunjikonishi/items/9cbf67314000cc42fbcc)
+- [実装クリーンアーキテクチャ](https://qiita.com/nrslib/items/a5f902c4defc83bd46b8)
 
 ---
 
