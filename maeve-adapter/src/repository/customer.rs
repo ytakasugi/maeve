@@ -1,6 +1,9 @@
 use async_trait::async_trait;
 use maeve_kernel::{
-    model::customer::{Customer, NewCustomer},
+    model::{
+        customer::{Customer, NewCustomer},
+        Id,
+    },
     repository::customer::CustomerRepository,
 };
 
@@ -9,6 +12,21 @@ use crate::model::customer::CustomerTable;
 
 #[async_trait]
 impl CustomerRepository for DatabaseRepository<Customer> {
+    async fn find(&self, id: &Id<Customer>) -> anyhow::Result<Option<Customer>> {
+        let pool = self.pool.0.clone();
+
+        let customer_table =
+            sqlx::query_file_as!(CustomerTable, "sql/findCustomer.sql", id.value.to_string())
+                .fetch_one(&*pool)
+                .await
+                .ok();
+
+        match customer_table {
+            Some(customer) => Ok(Some(customer.try_into()?)),
+            None => Ok(None),
+        }
+    }
+
     async fn create(&self, payload: NewCustomer) -> anyhow::Result<()> {
         let customer_table: CustomerTable = payload.try_into()?;
         let pool = self.pool.0.clone();
@@ -24,7 +42,7 @@ impl CustomerRepository for DatabaseRepository<Customer> {
             customer_table.address,
             customer_table.phone
         )
-        .fetch_one(&mut transaction)
+        .execute(&mut transaction)
         .await?;
 
         transaction
@@ -58,7 +76,7 @@ mod test {
         repository
             .create(NewCustomer::new(
                 Id::new(id),
-                user_id.to_string(),
+                Id::new(user_id),
                 "TestCustomer".to_string(),
                 "100-0014".to_string(),
                 "TestCustomerAddress".to_string(),
@@ -66,5 +84,9 @@ mod test {
             ))
             .await
             .unwrap();
+
+        let find_customer = repository.find(&Id::new(id)).await.unwrap().unwrap();
+
+        assert_eq!(find_customer.id.value, id);
     }
 }

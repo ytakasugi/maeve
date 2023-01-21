@@ -43,7 +43,7 @@ impl UserRepository for DatabaseRepository<User> {
             user_table.password_hash,
             user_table.user_role
         )
-        .fetch_one(&mut transaction)
+        .execute(&mut transaction)
         .await?;
 
         // トランザクションをコミットする

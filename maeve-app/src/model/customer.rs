@@ -24,7 +24,7 @@ impl CustomerView {
     pub fn new(customer: Customer) -> Self {
         Self {
             id: customer.id.value.to_string(),
-            user_id: customer.user_id,
+            user_id: customer.user_id.value.to_string(),
             name: customer.name,
             zip_code: customer.zip_code,
             address: customer.address,
@@ -40,7 +40,7 @@ impl TryFrom<CreateCustomer> for NewCustomer {
         let customer_id = Id::gen();
         Ok(NewCustomer::new(
             customer_id,
-            c.user_id,
+            c.user_id.try_into()?,
             c.name,
             c.zip_code,
             c.address,

@@ -1,7 +1,7 @@
 use crate::{
     module::Modules,
     routes::{
-        customer::create_customer,
+        customer::{create_customer, customer_view},
         user::{create_user, delete_user, user_view},
     },
 };
@@ -23,7 +23,9 @@ pub async fn startup(modules: Arc<Modules>) {
         .route("/:id", get(user_view))
         .route("/:id", delete(delete_user));
 
-    let customer_router = Router::new().route("/", post(create_customer));
+    let customer_router = Router::new()
+        .route("/", post(create_customer))
+        .route("/:id", get(customer_view));
 
     let app = Router::new()
         .nest("/users", user_router)

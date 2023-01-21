@@ -18,7 +18,7 @@ impl TryFrom<CustomerTable> for Customer {
     fn try_from(customer: CustomerTable) -> Result<Self, Self::Error> {
         Ok(Customer::new(
             customer.id.try_into()?,
-            customer.user_id,
+            customer.user_id.try_into()?,
             customer.name,
             customer.zip_code,
             customer.address,
@@ -33,7 +33,7 @@ impl TryFrom<NewCustomer> for CustomerTable {
     fn try_from(customer: NewCustomer) -> Result<Self, Self::Error> {
         Ok(CustomerTable {
             id: customer.id.value.to_string(),
-            user_id: customer.user_id,
+            user_id: customer.user_id.value.to_string(),
             name: customer.name,
             zip_code: customer.zip_code,
             address: customer.address,
