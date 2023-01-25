@@ -1,6 +1,13 @@
+drop table product;
+drop table category;
+drop table users;
 drop table review;
 drop table delivery_address;
 drop table cart;
 drop table order_items;
 drop table orders;
 drop table customer;
+drop table coupon;
+drop table session;
+drop table password_reset;
+drop table access_log;

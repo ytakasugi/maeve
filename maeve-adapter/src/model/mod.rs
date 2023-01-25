@@ -1,5 +1,6 @@
 pub mod customer;
 pub mod user;
+pub mod user_detail;
 
 #[macro_export]
 macro_rules! local_datetime {

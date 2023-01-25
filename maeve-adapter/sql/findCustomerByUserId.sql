@@ -1,16 +1,14 @@
 SELECT
-    *
+    U.ID AS USER_ID
+    , U.USER_NAME
+    , C.ID AS CUSTOMER_ID
+    , C.NAME AS CUSTOMER_NAME
+    , C.ZIP_CODE
+    , C.ADDRESS
+    , C.PHONE
 FROM
-    CUSTOMER C
+    USERS U INNER JOIN CUSTOMER C
+        ON U.ID = C.USER_ID
 WHERE
     1 = 1
-    AND USER_ID = $1
-    AND EXISTS (
-        SELECT
-            1
-        FROM
-            USERS U
-        WHERE
-            1 = 1
-            AND C.USER_ID = U.ID
-    )
+    AND U.ID = $1

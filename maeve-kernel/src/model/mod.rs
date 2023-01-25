@@ -5,6 +5,7 @@ use ulid::Ulid;
 
 pub mod customer;
 pub mod user;
+pub mod user_detail;
 
 #[derive(new, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Id<T> {
