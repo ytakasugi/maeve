@@ -22,18 +22,16 @@ pub async fn startup(modules: Arc<Modules>) {
     let user_router = Router::new()
         .route("/", post(create_user))
         .route("/:id", get(user_view))
+        .route("/:id/details", get(user_detail_view))
         .route("/:id", delete(delete_user));
 
     let customer_router = Router::new()
         .route("/", post(create_customer))
         .route("/:id", get(customer_view));
 
-    let user_detail_router = Router::new().route("/:id", get(user_detail_view));
-
     let app = Router::new()
         .nest("/users", user_router)
         .nest("/customers", customer_router)
-        .nest("/users/details", user_detail_router)
         .layer(Extension(modules));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
